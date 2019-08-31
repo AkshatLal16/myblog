@@ -1,0 +1,55 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load profanity %}
+{% load static %}
+{% block content %}
+	<div class="profile-container mt-4">
+		<div class="response-heading pt-4">
+			<p><b>Reporting story:</b></p>
+			<div class="follower-block mb-4">
+				<div class="p-3 border mb-3 shadow-sm">
+					<div class="d-flex align-items-center">
+						<div>
+							<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="ml-3 link d-block">
+							<p class="mb-0" style="font-size: 18px"><b>{{ story.title }}</b></p>
+							<div class="mb-1 text-muted story-body"></div>
+						</a>	
+						</div>
+						<div class="ml-4">
+							<applause-button style="height:30px; width:30px;" color="black" class='clapped clap-limit-exceeded'></applause-button>
+						</div>
+						<div class="ml-2">
+							{{ story.clapped_by.count }}
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<hr>
+		<form method="POST" class="profile-container" enctype="multipart/form-data">
+			{% csrf_token %}
+			<div class="">
+				<p><b>Name:</b></p>
+				<h4><input type="text" class="form-control bg-light" readonly value="{{ request.user.first_name }}"></h4>
+				<p><b>Username:</b></p>
+				<h4><input type="text" class="form-control bg-light" readonly value="@{{ request.user.username }}"></h4>
+				<p><b>Comment:</b></p>
+				<b>{% render_field form.comment class+="form-control bg-light"  cols="55"		 id="exampleFormControlSelect2" placeholder="Comment.." %}</b>
+				<div class="profile-submit">
+					<button class="btn btn-dark"  style="margin-top: 30px" type="submit">Save</button>	
+				</div>
+			</div>
+		</form>	
+	</div>
+<div id="a" style="display:none">{{ story.body|safe }}</div>
+<script>
+	var a = $("#a p");
+	var b = $(".story-body");
+	for(var j=0;j<a.length;j++){
+		b.append(a[j]);
+	}
+	b.text(b.text().substring(0,150));
+	b.append("...");
+</script>
+{% endblock content %}

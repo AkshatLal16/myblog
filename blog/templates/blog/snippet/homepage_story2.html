@@ -1,0 +1,31 @@
+<div class="card border-0 mb-3">
+  <div class="row no-gutters">
+    <div class="col-3">
+    	<a href="{% url 'show-story' username=story.author.username slug=story.slug %}"><img class="card-img-top rounded-0 img-fluid story-imgq{{ number }}" style="height: 100px; width:100px; object-fit: cover" src="" alt=""></a>
+    </div>
+    <div class="col-9">
+      <div class="card-body px-3 py-0">
+        <a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="link"><h6 class="card-title mb-1" style="font-weight: 600">{{ story.title }}</h6></a>
+        <p class="mb-0">	
+	    	<a href="{% url 'profile' username=story.author.username %}" class="link">{{ story.author.first_name }}</a>
+	    	 in 
+	    	<a href="#" class="link">{{ story.category }}</a>
+	    </p>
+	    <p class="text-muted">{{ story.date_posted|date:"d M" }}</p>
+      </div>
+    </div>
+    <div id="aq{{ number }}" style="display:none">{{ story.body|safe }}</div>
+  </div>
+</div>
+<script>
+	var src = $("#aq"+{{ number }}+" figure img:eq(0)").attr('src');
+	$(".story-imgq"+{{ number }}).attr('src',src);
+	console.log(src);
+	var a = $("#aq"+ {{ number }} +" p");
+	var b = $(".story-bodyq"+{{ number }});
+	for(var j=0;j<a.length;j++){
+		b.append(a[j]);
+	}
+	b.text(b.text().substring(0,150));
+	b.append("...");
+</script>

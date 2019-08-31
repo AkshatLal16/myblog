@@ -1,0 +1,49 @@
+{% extends 'users/profile_base.html' %}
+{% load static %}
+{% load profanity %}
+{% block profile_tabs %}
+	<div class="profile">
+		<div class="head pb-3 border-bottom">
+			<a href="{% url 'profile' username=user.user.username %}" class="text-muted link mr-3 d-inline">Profile</a>
+			<a href="{% url 'profile-claps' username=user.user.username %}" class="text-muted link">Claps</a>
+		</div>
+		<br>
+		<div class="follower-block mb-4">
+			<h5><strong>{{ user.user.first_name }} follows</strong></h5><br>
+			{% if user.follows.count == 0 %}
+				<div style="padding: 30px 0" class="border rounded mb-3 shadow-sm text-center">
+					<h2 class="align-self-center font-weight-bolder">No Following</h2>
+				</div>
+			{% else %}
+				{% for following in user.follows.all %}
+				<div class="p-3 border mb-3 shadow-sm">
+					<div class="d-flex align-items-center">
+						<a href="{% url 'profile' username=following.user.username %}">
+							<img style="height: 70px; width: 70px; object-fit: cover" class="rounded-circle" src="{{ following.image.url }}" alt="">
+						</a>
+						<a href="{% url 'profile' username=following.user.username %}" class="ml-3 link d-block">
+							<p class="mb-0" style="font-size: 18px"><b>{{ following.user.first_name }}</b></p>
+							<p class="mb-1 text-muted">{{ following.bio }}</p>
+						</a>	
+						<span class="ml-auto">
+						{% if request.user.username != following.user.username %}	
+							{% if request.user.is_authenticated %}
+								{% if following in request.user.profile.follows.all %}
+									{% include 'users/snippet/follow_form.html' with username=following.user.username is_following='True' %}
+								{% else %}
+									{% include 'users/snippet/follow_form.html' with username=following.user.username is_following='False' %}
+								{% endif %}
+							{% else %}
+								<a href="{% url 'login' %}"><button class="btn btn-outline-dark float-right p-1 " name="follow-btn">Follow</button></a>
+							{% endif %}
+						{% endif %}
+						</span>
+					</div>	
+				</div>
+				{% endfor %}
+			{% endif %}
+
+
+		</div>
+	</div>
+{% endblock profile_tabs %}

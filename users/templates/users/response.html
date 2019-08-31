@@ -1,0 +1,122 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load profanity %}
+{% load crispy_forms_tags %}
+{% block content %}
+	<div class="profile-container">
+		<div class="response-heading pt-4">
+			<p><b>Showing Responses for:</b></p>
+			<div class="follower-block mb-4">
+				<div class="p-3 border mb-3 shadow-sm">
+					<div class="d-flex align-items-center">
+						<div>
+							<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="ml-3 link d-block">
+							<p class="mb-0" style="font-size: 18px"><b>{{ story.title }}</b></p>
+							<div class="mb-1 text-muted story-body"></div>
+						</a>	
+						</div>
+						<div class="ml-4">
+							<applause-button style="height:30px; width:30px;" color="black" class='clapped clap-limit-exceeded'></applause-button>
+						</div>
+						<div class="ml-2">
+							{{ story.clapped_by.count }}
+						</div>
+					</div>	
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="follower-block mb-4">
+			{% if request.user.is_authenticated %}
+			  	<form method="POST">
+				  	{% csrf_token %}
+					<div class="form-group">
+		                {{ form.body|as_crispy_field }}
+		            </div>
+		            <button type="submit" class="d-none">Publish</button>  
+				</form>	
+				<button id="cancel-btn" class="d-none">Cancel</button>
+			{% else %}
+				<a href="{% url 'login' %}">{{ form.body|as_crispy_field }}</a>
+			{% endif %}
+		</div>
+		{% if responses.all.count != 0 %}
+			{% for response in responses %}
+			<div class="follower-block mb-4">
+				<div class="p-3 border mb-3 shadow-sm">
+					<div class="d-flex">
+						<div class="mr-3">
+							<a href="{% url 'profile' username=response.writer.username %}" class="link"><img src="{{ response.writer.profile.image.url }}" class="img-fluid rounded-circle" style="height:45px; width:45px; object-fit: cover;" alt=""></a>
+						</div>
+						<div>
+							<a href="{% url 'profile' username=response.writer.username %}" class="link"><p class="m-0"><b>{{ response.writer.first_name }}</b></p></a>
+							<p class="text-muted m-0">{{ response.date_posted|date:"d M, y" }}</p>
+						</div>
+						<div class="ml-auto">
+							<button class="btn-no-style"
+								data-toggle="popover" 
+								data-content="
+								{% if request.user.username == response.writer.username or request.user.is_superuser %}
+									<a class='link p-3' href='{% url 'response-delete' username=story.author.username slug=story.slug id=response.id %}'>Delete</a><br>
+								{% else %}
+									<a class='link p-3' href='{% url 'response-report' username=story.author.username slug=story.slug id=response.id %}'>Report</a>
+								{% endif %}
+								">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+							</button>
+						</div>
+					</div>
+					<div class="response-body p-4">
+						<p>{{ response.body }}</p>
+					</div>
+					<div class="d-flex">
+						{% if request.user.is_authenticated %}
+							{% if response in request.user.profile.response_claps.all %}
+								{% include 'users/snippet/response_claps_form.html' with response=response.id is_clapped='True' count=response.response_claps_by.all.count %}
+							{% else %}
+								{% include 'users/snippet/response_claps_form.html' with response=response.id is_clapped='False' count=response.response_claps_by.all.count %}
+							{% endif %}	
+						{% else %}
+						<applause-button style="height:40px; width:40px;" color="magenta" class='clapped clap-limit-exceeded'></applause-button>
+					{% endif %}	
+					</div>
+						
+				</div>
+			</div>
+			{% endfor %}
+		{% else %}
+			<div style="padding: 30px 0" class="border rounded mb-3 shadow-sm text-center">
+				<h2 class="align-self-center font-weight-bolder">No Responses</h2>
+			</div>
+		{% endif %}
+		
+
+		
+	</div>
+	<div id="a" style="display:none">{{ story.body|safe }}</div>
+<script>
+	var a = $("#a p");
+	var b = $(".story-body");
+	for(var j=0;j<a.length;j++){
+		b.append(a[j]);
+	}
+	b.text(b.text().substring(0,150));
+	b.append("...");
+	$('.form-control').each(function(){
+		$(this).on('click',function(){
+			$(this).attr('rows','10');
+			$('button[type=submit]').attr('class','btn btn-dark p-1 mx-2 float-right');
+			$('#cancel-btn').attr('class', 'btn btn-dark p-1 float-right');
+		})
+	})
+	$('label').attr('style','display:none');
+	$('#cancel-btn').each(function(){
+		$(this).on('click',function(){
+			$('.form-control').attr('rows','2');
+			$('button[type=submit]').attr('class','d-none');
+			$('#cancel-btn').attr('class', 'd-none');
+		})
+	})
+</script>
+
+{% endblock content %}

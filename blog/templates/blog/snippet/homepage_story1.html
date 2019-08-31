@@ -1,0 +1,28 @@
+<div class="col-lg-4">
+	<div class="card border-0">
+	  <a href="{% url 'show-story' username=story.author.username slug=story.slug %}"><img class="card-img-top rounded-0 img-fluid story-imgq{{ number }}" style="max-height: 180px; width:100%; object-fit: cover" src="" alt=""></a>
+	  <div class="card-body text-left px-0 py-2">
+	  	<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="link"><h4>{{ story.title }}</h4>
+	    <div class="story-bodyq{{ number }} text-muted mb-1"></div></a>
+	    <p class="mb-0">	
+	    	<a href="{% url 'profile' username=story.author.username %}" class="link">{{ story.author.first_name }}</a>
+	    	 in 
+	    	<a href="#" class="link">{{ story.category }}</a>
+	    </p>
+	    <p class="text-muted">{{ story.date_posted|date:"d M" }}</p>
+	  </div>
+	  <div id="aq{{ number }}" style="display:none">{{ story.body|safe }}</div>
+	</div>
+</div>
+<script>
+	var src = $("#aq"+{{ number }}+" figure img:eq(0)").attr('src');
+	$(".story-imgq"+{{ number }}).attr('src',src);
+	console.log(src);
+	var a = $("#aq"+ {{ number }} +" p");
+	var b = $(".story-bodyq"+{{ number }});
+	for(var j=0;j<a.length;j++){
+		b.append(a[j]);
+	}
+	b.text(b.text().substring(0,150));
+	b.append("...");
+</script>

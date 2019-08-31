@@ -1,0 +1,32 @@
+{% extends 'users/base.html' %}
+{% load static %}
+  	{% block content %}
+      <div class="nav-scroller mb-2 shadow-sm sticky-top bg-light">
+        <nav style=" font-size: 15px" class="d-flex py-1 justify-content-between container text-nowrap">
+          <a href="{% url 'genre' title='Arts' %}" class="nav-link p-2">ARTS</a>
+          <a href="{% url 'genre' title='Science' %}" class="nav-link p-2">SCIENCE</a>
+          <a href="{% url 'genre' title='Design' %}" class="nav-link p-2">DESIGN</a>
+          <a href="{% url 'genre' title='Marketing' %}" class="nav-link p-2">MARKETING</a>
+          <a href="{% url 'genre' title='Future' %}" class="nav-link p-2">FUTURE</a>
+          <a href="{% url 'genre' title='Work' %}" class="nav-link p-2">WORK</a>
+          <a href="{% url 'genre' title='Cryptocurrency' %}" class="nav-link p-2">CRYPTOCURRENCY</a>
+          <a href="{% url 'genre' title='Data Science' %}" class="nav-link p-2">DATA SCIENCE</a>
+          <a href="{% url 'genre' title='Lifestyle' %}" class="nav-link p-2">LIFESTYLE</a>
+          <a href="{% url 'genre' title='Travel' %}" class="nav-link p-2">TRAVEL</a>
+          <a href="{% url 'genre' title='Election' %}" class="nav-link p-2">ELECTION</a>
+          <a href="{% url 'genre' title='Humor' %}" class="nav-link p-2">HUMOR</a>
+          <a href="{% url 'topics-list' %}" class="nav-link p-2">MORE</a>
+        </nav>  
+     </div>
+      
+      <main class="container pt-3 position-relative">
+        {% block content_blog %}{% endblock content_blog %}
+      </main>
+    {% endblock content %}
+    
+
+
+    
+
+  </body>
+</html>

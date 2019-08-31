@@ -1,0 +1,135 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% load profanity %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="block profile-container p-3" style="height: 100%">
+        <p><a href="#" class="text-muted ">{{ story.category }}</a></p>
+        <h1><b>{{ story.title }}</b></h1>
+<!--             <p class="text-muted">{{ story.body|safe|truncatewords_html:4 }}</p> -->
+        <br>
+        <div class="d-flex ">
+            <div class="mx-2">
+                 <a href="{% url 'profile' username=story.author.username %}" class="d-inline"><img src="{{ story.author.profile.image.url }}" style="height: 45px;width: 45px; object-fit: cover" class="rounded-circle" alt=""></a>
+
+            </div>
+            <div class="mx-2">
+                <a href="{% url 'profile' username=story.author.username %}" class="link"><p class="m-0 d-inline" style="font-size: 15px">{{ story.author.username }}</p></a>
+                <p class="text-muted mb-0" style="font-size: 15px">Jul 29</p>                            
+            </div>
+            <div class="ml-auto">
+                {% if request.user.is_authenticated and story.author == request.user %}
+                    <a href="{% url 'edit-story' username=story.author.username slug=story.slug  %}" class="btn btn-info p-1">Edit Story</a>
+                    <a href="{% url 'delete-story' username=request.user.username slug=story.slug %}" class="btn btn-danger p-1">Delete Story</a>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <div class="profile-container story-body" style="object-fit: cover">
+            <p >{{ story.body|censor|safe }}</p>
+        
+        </div>
+        <br>
+        <div class="d-flex">
+            {% if request.user.is_authenticated %}
+                {% if story in request.user.profile.claps.all %}
+                    {% include 'users/snippet/like_toggle.html' with story=story.slug count=story.clapped_by.all.count is_clapped='True' %}
+
+                {% else %}
+                    {% include 'users/snippet/like_toggle.html' with story=story.slug count=story.clapped_by.all.count is_clapped='False' %}
+                {% endif %}
+                    
+            {% else %}
+                <applause-button style="height:40px; width:40px;" color="magenta" class='clapped clap-limit-exceeded'></applause-button>
+            {% endif %}
+            <span class="responses-count-div ml-auto">
+                <a href="{% url 'responses' slug=story.slug username=story.author.username %}" class="text-muted mr-2 link">{{ response.all.count }} Responses</a>
+                    {% if request.user.is_authenticated %}
+                        {% if story in request.user.profile.bookmarks.all %}
+                            {% include 'users/snippet/bookmark_form.html' with story=story.slug is_bookmarked='True' %}
+                        {% else %}
+                            {% include 'users/snippet/bookmark_form.html' with story=story.slug is_bookmarked='False' %}
+                        {% endif %}
+                            
+                            
+                    {% else %}
+                        <button onclick="nfFill()"  id="nf-f" class="btn-no-style">
+                            <img  src="{% static 'images/fill-bookmark.svg' %}" alt="">
+                        </button>
+                    {% endif %}
+            </span>                 
+        </div>
+        <hr>
+         <div class="d-flex px-4">
+            <div class="align-self-center">
+                <a href="{% url 'profile' username=story.author.username %}" class="d-inline"><img src="{{ story.author.profile.image.url }}" style="height: 80px;width: 80px; object-fit: cover" class="rounded-circle" alt=""></a>
+
+            </div>
+            <div class="ml-3 w-100">
+                <p class="mb-0 text-muted">Written By</p>
+                <a href="{% url 'profile' username=story.author.username %}" class="link"><p class="m-0 d-inline" style="font-size: 25px"><b>{{ story.author.first_name }}</b></p></a>
+                <span>
+                    {% if request.user.is_authenticated %}
+                        {% if story.author == request.user %}
+                            <a href="{% url 'profile-edit' %}"><button class="btn btn-dark float-right p-1">Edit Profile</button></a>
+                        {% else %}
+                            {% if story.author.profile in request.user.profile.follows.all %}
+                                {% include 'users/snippet/follow_form.html' with username=story.author.username is_following='True' %}
+                            {% else %}
+                                {% include 'users/snippet/follow_form.html' with username=story.author.username is_following='False' %}
+                            {% endif %} 
+                        {% endif %}
+                        
+                    {% else %}
+                        <a href="{% url 'login' %}"><button class="btn btn-outline-dark float-right p-1 " name="follow-btn">Follow</button></a>
+                    {% endif %}
+                </span>
+                <p class="text-muted mb-0" style="font-size: 15px">{{ story.author.profile.bio }}</p>                            
+            </div>
+        </div>
+
+        <br>  
+         <div class="d-flex px-4">
+            <div class="">
+                <a href="{% url 'genre' title=genre.title %}" class="d-inline"><img src="{{ genre.image.url }}" style="height: 80px;width: 80px; object-fit: cover" class="rounded-circle" alt=""></a>
+
+            </div>
+            <div class="ml-3">
+                <a href="{% url 'genre' title=genre.title %}" class="link">
+                    <p class="m-0 d-inline" style="font-size: 25px"><b>{{ genre.title }}</b></p>
+                    <p class="text-muted mb-0" style="font-size: 15px">{{ genre.info }}</p>
+                </a>                       
+            </div>
+        </div>  
+        <hr>
+        <br>
+        <a href="{% url 'responses' slug=story.slug username=story.author.username %}" class="link">
+            <div class="p-4 border border-primary text-center text-primary">                
+                See Responses({{ response.all.count }})
+            </div>
+        </a>
+    </div><br><br>
+   <!--  -->
+
+
+<script>
+    $(".story-body p").attr('style','font-size: 20px');
+    /*$(".story-img"+i).attr('src',src);
+    console.log(src);
+    var a = $("#a"+i+" p");
+    var b = $(".story-body"+i);
+    for(var j=0;j<a.length;j++){
+        b.append(a[j]);
+    }
+    b.text(b.text().substring(0,150));
+    b.append("...");*/
+</script>
+
+   <style>
+       img{
+           max-width: 700px;
+       }
+   </style>
+   
+	
+{% endblock content %}

@@ -1,0 +1,210 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content_blog %}
+	<div class="row">
+		<div class="col-lg-4 border-right">
+			{% if homepage_story.all.count > 0 %}
+				<div class="card border-0">
+				  <a href="{% url 'show-story' username=homepage_story.0.author.username slug=homepage_story.0.slug %}"><img class="card-img-top rounded-0 img-fluid story-img1" style="max-height: 180px; width:100%; object-fit: cover" src="" alt=""></a>
+				  <div class="card-body text-left px-0 py-2">
+				  	<a href="{% url 'show-story' username=homepage_story.0.author.username slug=homepage_story.0.slug %}" class="link"><h4>{{ homepage_story.0.title }}</h4>
+				    <div class="story-body1 text-muted mb-1"></div></a>
+				    <p class="mb-0">	
+				    	<a href="{% url 'profile' username=homepage_story.0.author.username %}" class="link">{{ homepage_story.0.author.first_name }}</a>
+				    	 in 
+				    	<a href="{% url 'genre' title=homepage_story.0.category %}" class="link">{{ homepage_story.0.category }}</a>
+				    </p>
+				    <p class="text-muted">{{ homepage_story.0.date_posted|date:"d M" }}</p>
+				  </div>
+				  <div id="a1" style="display:none">{{ homepage_story.0.body|safe }}</div>
+				</div>
+			{% else %}
+				{% include 'blog/snippet/homepage_story1.html' with story=backup_story.5 number=5 %}
+			{% endif %}
+		</div>
+		
+
+
+		<div class="col-lg-4 border-right">
+			{% if homepage_story.all.count > 1 %}
+				<div class="card border-0 mb-3">
+				  <div class="row no-gutters">
+				    <div class="col-3">
+				    	<a href="{% url 'show-story' username=homepage_story.1.author.username slug=homepage_story.1.slug %}"><img class="card-img-top rounded-0 img-fluid story-img2" style="height: 100px; width:100px; object-fit: cover" src="" alt=""></a>
+				    </div>
+				    <div class="col-9">
+				      <div class="card-body px-3 py-0">
+				        <a href="{% url 'show-story' username=homepage_story.1.author.username slug=homepage_story.1.slug %}" class="link"><h6 class="card-title mb-1" style="font-weight: 600">{{ homepage_story.1.title }}</h6></a>
+				        <p class="mb-0">	
+					    	<a href="{% url 'profile' username=homepage_story.1.author.username %}" class="link">{{ homepage_story.1.author.first_name }}</a>
+					    	 in 
+					    	<a href="{% url 'genre' title=homepage_story.1.category %}" class="link">{{ homepage_story.1.category }}</a>
+					    </p>
+					    <p class="text-muted">{{ homepage_story.1.date_posted|date:"d M" }}</p>
+				      </div>
+				    </div>
+				    <div id="a2" style="display:none">{{ homepage_story.1.body|safe }}</div>
+				  </div>
+				</div>
+			{% else %}
+				{% include 'blog/snippet/homepage_story2.html' with story=backup_story.4 number=4 %}
+			{% endif %}
+			{% if homepage_story.all.count > 2 %}
+				<div class="card border-0 mb-3">
+				  <div class="row no-gutters">
+				    <div class="col-3">
+				    	<a href="{% url 'show-story' username=homepage_story.2.author.username slug=homepage_story.2.slug %}"><img class="card-img-top rounded-0 img-fluid story-img3" style="height: 100px; width:100px; object-fit: cover" src="" alt=""></a>
+				    </div>
+				    <div class="col-9">
+				      <div class="card-body px-3 py-0">
+				        <a href="{% url 'show-story' username=homepage_story.2.author.username slug=homepage_story.2.slug %}" class="link"><h6 class="card-title mb-1" style="font-weight: 600">{{ homepage_story.2.title }}</h6></a>
+				        <p class="mb-0">	
+					    	<a href="{% url 'profile' username=homepage_story.2.author.username %}" class="link">{{ homepage_story.2.author.first_name }}</a>
+					    	 in 
+					    	<a href="{% url 'genre' title=homepage_story.2.category %}" class="link">{{ homepage_story.2.category }}</a>
+					    </p>
+					    <p class="text-muted">{{ homepage_story.2.date_posted|date:"d M" }}</p>
+				      </div>
+				    </div>
+				    <div id="a3" style="display:none">{{ homepage_story.2.body|safe }}</div>
+				  </div>
+				</div>
+			{% else %}
+				{% include 'blog/snippet/homepage_story2.html' with story=backup_story.3 number=3 %}
+			{% endif %}
+
+			{% if homepage_story.all.count > 3 %}
+				<div class="card border-0 mb-3">
+				  <div class="row no-gutters">
+				    <div class="col-3">
+				    	<a href="{% url 'show-story' username=homepage_story.3.author.username slug=homepage_story.3.slug %}"><img class="card-img-top rounded-0 img-fluid story-img4" style="height: 100px; width:100px; object-fit: cover" src="" alt=""></a>
+				    </div>
+				    <div class="col-9">
+				      <div class="card-body px-3 py-0">
+				        <a href="{% url 'show-story' username=homepage_story.3.author.username slug=homepage_story.3.slug %}" class="link"><h6 class="card-title mb-1" style="font-weight: 600">{{ homepage_story.3.title }}</h6></a>
+				        <p class="mb-0">	
+					    	<a href="{% url 'profile' username=homepage_story.3.author.username %}" class="link">{{ homepage_story.3.author.first_name }}</a>
+					    	 in 
+					    	<a href="{% url 'genre' title=homepage_story.3.category %}" class="link">{{ homepage_story.3.category }}</a>
+					    </p>
+					    <p class="text-muted">{{ homepage_story.3.date_posted|date:"d M" }}</p>
+				      </div>
+				    </div>
+				    <div id="a4" style="display:none">{{ homepage_story.3.body|safe }}</div>
+				  </div>
+				</div>
+			{% else %}
+				{% include 'blog/snippet/homepage_story2.html' with story=backup_story.2 number=2 %}
+			{% endif %}
+		</div>
+
+		{% if homepage_story.all.count > 4 %}
+			<div class="col-lg-4">
+				<div class="card border-0">
+				  <a href="{% url 'show-story' username=homepage_story.4.author.username slug=homepage_story.4.slug %}"><img class="card-img-top rounded-0 img-fluid story-img5" style="max-height: 180px; width:100%; object-fit: cover" src="" alt=""></a>
+				  <div class="card-body text-left px-0 py-2">
+				  	<a href="{% url 'show-story' username=homepage_story.4.author.username slug=homepage_story.3.slug %}" class="link"><h4>{{ homepage_story.4.title }}</h4>
+				    <div class="story-body1 text-muted mb-1"></div></a>
+				    <p class="mb-0">	
+				    	<a href="{% url 'profile' username=homepage_story.4.author.username %}" class="link">{{ homepage_story.4.author.first_name }}</a>
+				    	 in 
+				    	<a href="{% url 'genre' title=homepage_story.4.category  %}" class="link">{{ homepage_story.4.category }}</a>
+				    </p>
+				    <p class="text-muted">{{ homepage_story.4.date_posted|date:"d M" }}</p>
+				  </div>
+				  <div id="a5" style="display:none">{{ homepage_story.4.body|safe }}</div>
+				</div>
+			</div>
+		{% else %}
+			{% include 'blog/snippet/homepage_story1.html' with story=backup_story.1 number=1 %}
+		{% endif %}
+		
+	</div>
+
+	<hr>
+
+	<div class="row container">
+		<div class="col-lg-8 px-0">
+			<div class="featured-head pb-4 border-bottom border-dark">
+				<h4 class="d-inline">Featured For Members</h4>
+			</div>
+			<br>
+			<div class="featured-body">
+			{% for story in featured_story %}
+				<div class="card border-0 mb-3">
+				  <div class="row no-gutters">
+				    <div class="col-9">
+				    	<div class="card-body px-3 py-0">
+				    		<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="link">
+						        <h5 class="card-title mb-1" style="font-weight: bold">{{ story.title }}</h5>
+						        <div class="featured-story-body{{ forloop.counter }} text-muted mb-1"></div>
+						    </a>
+				        <p class="mb-0">	
+					    	<a href="{% url 'profile' username=story.author.username %}" class="link">{{ story.author.first_name }}</a>
+					    	 in 
+					    	<a href="{% url 'genre' title=story.category  %}" class="link">{{ story.category }}</a>
+					    </p>
+					    <p class="text-muted">{{ story.date_posted|date:"d M" }}</p>
+				      </div>
+				    </div>
+				    <div class="col-3">
+				      <a href="{% url 'show-story' username=story.author.username slug=story.slug %}"><img class="card-img-top rounded-0 img-fluid featured-story-img{{ forloop.counter }}" style="object-fit: cover; height: 150px; width: 150px" src="" alt=""></a>
+				    </div>
+				  </div>
+				  <div id="fa{{ forloop.counter }}" style="display:none">{{ story.body|safe }}</div>
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+
+
+
+		<div class="col-lg-4 desktop-view">
+			<div class="popular-head pb-4 border-bottom border-dark">
+				<h4 class="d-inline">POPULAR</h4>
+			</div>
+			<br>
+			<div class="popular-body">
+				{% for story in popular_story %}
+					<div class="row mb-3">
+						<div class="col-lg-2">
+							<p style="font-family: 'Open Sans'; font-size: 40px; color: silver" class="px-3 py-4 d-inline">{{ forloop.counter|stringformat:"02d" }}</p>
+						</div>
+						<div class="col-lg-10">
+							<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="link"><p class="d-inline"><strong>{{ story.title }}</strong></p></a>
+							<p class="mb-0"><a href="{% url 'profile' username=story.author.username %}" class="link">{{ story.author.first_name }}</a></p>
+						    <p class="text-muted">{{ story.date_posted|date:"d M" }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+<script>
+	for(var i=1; i<=5; i++){
+		var src = $("#a"+i+" figure img:eq(0)").attr('src');
+		$(".story-img"+i).attr('src',src);
+		var a = $("#a"+i+" p");
+		var b = $(".story-body"+i);
+		for(var j=0;j<a.length;j++){
+			b.append(a[j]);
+		}
+		b.text(b.text().substring(0,150));
+		b.append("...");
+	}
+</script>
+<script>
+	for(var i=1; i<={{ featured_story.all.count }}; i++){
+		var src = $("#fa"+i+" figure img:eq(0)").attr('src');
+		$(".featured-story-img"+i).attr('src',src);
+		var a = $("#fa"+i+" p");
+		var b = $(".featured-story-body"+i);
+		for(var j=0;j<a.length;j++){
+			b.append(a[j]);
+		}
+		b.text(b.text().substring(0,150));
+		b.append("...");
+	}
+</script>
+{% endblock content_blog %}

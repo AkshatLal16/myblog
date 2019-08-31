@@ -1,0 +1,65 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+{% load profanity %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{% static 'ckeditor/ckeditor/contents.css' %}">
+<script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+<script src="{% static 'tag-input/tag-input.js' %}"></script>
+<link rel="stylesheet" href="{% static 'tag-input/tag-input.css' %}">
+    <div class="block mt-3" style="height: 100%">
+        <div class="content-section add-story">
+            <form method="POST" class="profile-container">
+                   {% csrf_token %}
+                   <div class="form-group dash-heading">
+                       <legend class="border-bottom mb-4"><h2 style="border-style: none">New Story</h2></legend>
+                       <div>
+                      {{ form.media }}
+                      <div class="form-group">
+                        {{ form.title|as_crispy_field }}
+                      </div>
+                      <div class="form-group">
+                        {{ form.body|as_crispy_field }}
+                      </div>  
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <!-- Button trigger modal -->
+                      <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter">
+                        Ready To Publish?
+                      </button>
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content1">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalCenterTitle">Ready To Publish?</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>Category</h5>
+                                  {{ form.category|as_crispy_field }}
+                                <br>
+                                <h5>Author</h5>
+                                  <input type="text" class="form-control" readonly value="{{ request.user.first_name }}"><br>
+                                  <h5>Publishing Date</h5>
+                                  <input type="text" class="form-control" readonly value="{% now 'jS F Y' %}"><br> 
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <button class="btn btn-success px-44"  type="submit">Submit</button>    
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+               </form>  
+            </div>  
+    </div>    
+        <script>
+          document.getElementById("id_category").setAttribute("class","form-control");
+        </script>
+{% endblock content %}

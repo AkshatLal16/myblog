@@ -1,0 +1,10 @@
+{% load static %}
+<button class="bookmark-button btn-no-style" data-is-bookmarked="{{ is_bookmarked }}" data-story="{{ story }}">
+	{% if is_bookmarked == 'True' %}
+		<img  src="{% static 'images/fill-bookmark.svg' %}" alt="">
+	{% else %}
+		<img  src="{% static 'images/outline-bookmark.svg' %}" alt="">
+	{% endif %}
+	
+</button>
+

@@ -1,0 +1,345 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/mycss.css' %}">
+<!-- 
+   <link rel="stylesheet" href="https://unpkg.com/applause-button/dist/applause-button.css">
+  <script src="https://unpkg.com/applause-button/dist/applause-button.js"></script> -->
+
+  <link rel="stylesheet" href="{% static 'applause-button/applause-button.css' %}">
+  <script src="{% static 'applause-button/applause-button.js' %}"></script>
+
+ <!-- <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+
+<script src="{% static 'bootstrap/js/jquery-2.2.4.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/popper.min.js' %}" ></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}" ></script>
+
+  <script>
+     $(document).ready(function() {
+        $(".easyimage img").attr("class","img-fluid")
+    });
+  </script>
+    <title>UsersName</title>
+  {% block head_extra %}{% endblock head_extra %}
+  </head>
+  <body>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    
+    <script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover({
+          html:true,
+          placement: "bottom",
+          trigger:"focus"
+        });   
+    });    
+
+
+    </script>
+    
+
+    
+    <header class="nav-header shadow-sm py-3 ">
+      <div class="container">
+          <a class="navbar-brand" href="{% url 'blog-home' %}">
+          <img class="logo-img" src="{% static 'images/logo.png' %}">
+        </a>
+        <div class="float-right py-2 ">
+          <form id="demo-2" class="mr-1 d-inline nav-search desktop-view" action="{% url 'search' %}" autocomplete="on">
+            <input id="search_submit" name="q" type="search" placeholder="Search">
+          </form>
+           <a href="{% url 'search' %}"><img src="https://static.tumblr.com/ftv85bp/MIXmud4tx/search-icon.png" class="border border-secondary rounded-circle mobile-view" style="padding: 10px"></a>
+          {% if request.user.is_authenticated %}
+          <div class="d-inline mr-1 px-1 desktop-view" >
+              <button 
+                tabindex="0"
+                type="button" 
+                class="btn-profile" 
+                data-toggle="popover" 
+                title="
+                <div class='popover-title px-2 py-3'>
+                  <a href='#' class='link '>
+                    Notifications
+                  </a>
+                </div>
+                " 
+                data-content="
+                  <!-- <a href='#' class='link text-muted '>
+                    <div class='popover-title row  py-2 border-bottom'>
+                      <div class='col-lg-auto'>
+                        <a href='#' class='link'><img src='{% static 'images/m.png' %}'><a>
+                      </div>
+                      <div class='col pl-2'>
+                        <a href='#' class='link'>Akshat Lal recently liked your post<a><br>
+                      </div>
+                    </div>
+                  <a>
+                  <a href='#' class='link text-muted '>
+                    <div class='popover-title row  py-3 border-bottom'>
+                      <div class='col-lg-auto'>
+                        <a href='#' class='link'><img src='{% static 'images/account-img.svg' %}'><a>
+                      </div>
+                      <div class='col pl-2'>
+                        <a href='#' class='link'>Akshat Lal recently liked your post<a><br>
+                      </div>
+                    </div>
+                  <a>
+                  <a href='#' class='link text-muted '>
+                  <div class='popover-title row  py-2 border-bottom'>
+                    <div class='col-lg-auto'>
+                      <a href='#' class='link'><img src='{% static 'images/m.png' %}'><a>
+                    </div>
+                    <div class='col pl-2'>
+                      <a href='#' class='link'>Akshat Lal recently liked your post<a><br>
+                    </div>
+                  </div>
+                  <a>
+                  <a href='#' class='link text-muted  border-bottom '>
+                    <div class='popover-title row  py-2'>
+                      <div class='col-lg-auto'>
+                        <a href='#' class='link'><img src='{% static 'images/m.png' %}'><a>
+                      </div>
+                      <div class='col pl-2'>
+                        <a href='#' class='link'>Akshat Lal recently liked your post<a><br>
+                      </div>
+                    </div>
+                  <a>
+                  <a href='#' class='link text-muted  border-bottom  text-center'>
+                    <div class='popover-title py-2'>
+                        Show More
+                    </div>
+                  <a> -->
+                  <div class='popover-title row  p-4 border-bottom text-center'>
+                      SOON!
+                  </div>
+                ">
+                   <svg id="i-bell" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <path d="M8 17 C8 12 9 6 16 6 23 6 24 12 24 17 24 22 27 25 27 25 L5 25 C5 25 8 22 8 17 Z M20 25 C20 25 20 29 16 29 12 29 12 25 12 25 M16 3 L16 6" />
+                  </svg> 
+              </button>
+          </div>
+            
+              <div class="d-inline mr-1" >
+                <button 
+                  tabindex="0"
+                  type="button" 
+                  class="btn-profile" 
+                  data-toggle="popover" 
+                  title="
+                  <div class='popover-title px-2 py-3'>
+                    <div class='row'>
+                      <div class='col-lg-auto'>
+                        <a href='{% url 'profile' username=request.user.username %}' class='link'><img class='rounded-circle' style='object-fit: cover' height='40' width='40'  src='{{ request.user.profile.image.url }}'><a>
+                      </div>
+                      <div class='col pl-2'>
+                        <a href='{% url 'profile' username=request.user.username %}' class='link'>{{ request.user.first_name }}<a><br>
+                        <a href='{% url 'profile' username=request.user.username %}' class='link text-muted'>@{{ request.user.username }}<a>
+                      </div>
+                    </div>
+                  </div>
+                  " 
+                  data-content="
+                    <a href='{% url 'add-story' %}' class='link p-3 text-muted'>New Story<a><br><br>
+                    <a href='{% url 'profile' username=request.user.username %}' class='link p-3 text-muted'>Stories<a><br><br>
+                    <a href='#' class='link p-3 text-muted'>Notification<a><br><br>
+                    <a href='{% url 'bookmarks' %}' class='link p-3 text-muted'>Bookmarks<a><br><br>
+                    <a href='{% url 'profile' username=request.user.username %}' class='link p-3 text-muted'>Profile<a><br><br>
+                    <a href='{% url 'logout' %}' class='link p-3 text-muted'>Sign Out<a><br><br>
+                    
+                  ">
+                    <img class="rounded-circle " style="object-fit: cover" src="{{ request.user.profile.image.url }}" width="40" height="40">
+                </button>
+            </div>
+            {% else %}
+
+              <a href="{% url 'login' %}" class="btn btn-outline-dark">
+                Sign In
+              </a>
+                
+           {% endif %}
+        </div>
+      </div>
+      
+    </header>  
+    
+      
+      {% block content %}
+        
+      {% endblock content %}
+  </body> 
+
+  <script>
+    $(document).ready(function(){
+      $('.follow-button').each(function(){
+        $(this).on('click',function(){
+            var button = $(this);
+            var username = button.attr('data-username');
+            var is_following = button.attr('data-is-following');
+          $.ajax({
+              url: '/follow/',
+              method: 'GET',
+              data: 'username=' + username + '&is_following=' + is_following,
+              success: function(response){
+                if(response=="True"){
+                  if(is_following=="True"){
+                    button.html('Follow');
+                    button.attr('data-is-following',"False");
+                    button.attr('class',"btn btn-outline-dark float-right p-1");
+                  }else{
+                    button.html('Following');
+                    button.attr('data-is-following',"True");
+                    button.attr('class',"btn btn-dark float-right p-1");
+                  }
+                }else{
+                  console.log("Something went wrong");
+                }
+              }
+            });
+        })
+      });
+    });
+    
+  </script>
+  
+  <script>
+    $(document).ready(function(){
+      $('.bookmark-button').each(function() {
+        $(this).on('click', function(){
+          var button = $(this);
+          var story = button.attr('data-story');
+            var is_bookmarked = button.attr('data-is-bookmarked');
+            $.ajax({
+              url: '/bookmark/',
+              method: 'GET',
+              data: 'story=' + story + '&is_bookmarked=' + is_bookmarked,
+
+              success: function(response){
+                if(response=="True"){
+                  if(is_bookmarked=="True"){
+                    button.html("<img  src='{% static 'images/outline-bookmark.svg' %}' alt='bookmark-false'>");
+                    button.attr('data-is-bookmarked',"False");
+
+                  }else{
+                    button.html("<img  src='{% static 'images/fill-bookmark.svg' %}' alt='bookmark-false'>");
+                    button.attr('data-is-bookmarked',"True");
+                  }
+                }else{
+                  console.log("Something went wrong");
+                }
+              }
+            });
+        })   
+      });
+    });
+      
+</script>
+<script>
+    $(document).ready(function(){
+      $('.like-button').each(function() {
+        $(this).on('click', function(){
+          var button = $(this);
+          var story = button.attr('data-story');
+            var is_clapped = button.attr('data-is-clapped');
+            var count = button.attr('data-count');
+            console.log(typeof(count));
+            $.ajax({
+              url: '/like/',
+              method: 'GET',
+              data: 'story=' + story + '&is_clapped=' + is_clapped + '&count=' + count,
+
+              success: function(response){
+                if(response=="True"){
+                  if(is_clapped=="True"){
+                    button.attr('class',"clapped clap-limit-exceeded");
+                    var newCount = parseInt(count) +1;
+                    button.attr('data-count',newCount);
+                    $("#apBtn").html(newCount);
+                    button.attr('data-is-clapped',"True");
+
+                  }else{
+                    var newCount = parseInt(count) +1;
+                    button.attr('class',"clapped clap-limit-exceeded");
+                    button.attr('data-count',newCount);
+                    $("#apBtn").html(newCount);
+                    button.attr('data-is-clapped',"True");
+
+                  }
+                }else{
+                  console.log("Something went wrong");
+                }
+              }
+            });
+        })   
+      });
+    });
+      
+</script>
+
+ <script>
+    $(document).ready(function(){
+      $('.response-button').each(function() {
+        $(this).on('click', function(){
+          var button = $(this);
+          var response = button.attr('data-response');
+            var is_clapped = button.attr('data-is-clapped');
+            var count = button.attr('data-count');
+            $.ajax({
+              url: '/response_claps/',
+              method: 'GET',
+              data: 'response=' + response + '&is_clapped=' + is_clapped + '&count=' + count,
+
+              success: function(response){
+                if(response=="True"){
+                  if(is_clapped=="True"){
+                    button.attr('class',"clapped clap-limit-exceeded");
+                    var newCount = parseInt(count) +1;
+                    button.attr('data-count',newCount);
+                    $("#apBtn").html(newCount);
+                    button.attr('data-is-clapped',"True");
+
+                  }else{
+                    var newCount = parseInt(count) +1;
+                    button.attr('class',"clapped clap-limit-exceeded");
+                    button.attr('data-count',newCount);
+                    $("#apBtn").html(newCount);
+                    button.attr('data-is-clapped',"True");
+
+                  }
+                }else{
+                  console.log("Something went wrong");
+                }
+              }
+            });
+        })   
+      });
+    });
+      
+</script>
+<script>
+  $(".count").attr('style','display:none');
+</script>
+</html>

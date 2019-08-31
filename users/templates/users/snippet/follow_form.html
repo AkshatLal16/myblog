@@ -1,0 +1,16 @@
+<button class="follow-button btn 
+		{% if is_following == 'True' %}
+			btn-dark
+		{% else %}
+			btn-outline-dark
+		{% endif %}
+		float-right p-1" 
+		data-is-following="{{ is_following }}" 
+		data-username="{{ username }}">
+	{% if is_following == 'True' %}
+		Following
+	{% else %}
+		Follow
+	{% endif %}
+</button>
+

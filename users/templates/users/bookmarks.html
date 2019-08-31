@@ -1,0 +1,68 @@
+{% extends 'users/base.html' %}
+{% load profanity %}
+{% load static %}
+{% block content %}
+	<div class="profile-container">
+		<div class="bookmark-heading py-4">
+			<h1><b>Bookmarks</b></h1>
+		</div>
+		<hr>
+		<div class="bookmarks-list">
+			{% if bookmarks_list.count == 0 %}
+				<div style="padding: 30px 0" class="border rounded mb-3 shadow-sm text-center">
+					<h2 class="align-self-center font-weight-bolder">No Bookmarks</h2>
+				</div>
+			{% else %}
+				{% for bookmarks in bookmarks_list %}
+					<div class="card border-0 mb-3 p-3">
+					  <div class="row no-gutters">
+						 <div class="col-md-3 mb-3">
+					      <a href="{% url 'show-story' username=bookmarks.author.username slug=bookmarks.slug %}" class="link">
+					      	<img src="" class="card-img bookmark-img{{ forloop.counter }} rounded-0 img-fluid" alt="..." style="object-fit: cover; height: 150px; width: 100%">
+					      </a>
+					      </div>
+					      <div class="col-md-9">
+					    	<div class=" card-body px-3 py-0">
+						        <a href="{% url 'show-story' username=bookmarks.author.username slug=bookmarks.slug %}" class="link">
+						        	<h5 class="card-title mb-1" style="font-weight: bold">{{ bookmarks.title }}</h5>
+						        	<div class="bookmark-body{{ forloop.counter }}"></div>
+						        </a>
+						        <p class="mb-0 text-muted mt-2">	
+							    	<a href="{% url 'profile' username=bookmarks.author.username %}" class="text-muted">{{ bookmarks.author.first_name }}</a>
+							    	 in 
+							    	<a href="#" class="text-muted">{{ bookmarks.category }}</a>
+							    	<span class="responses-count-div float-right">
+										{% if bookmarks in request.user.profile.bookmarks.all %}
+											{% include 'users/snippet/bookmark_form.html' with story=bookmarks.slug is_bookmarked='True' %}
+										{% else %}
+											{% include 'users/snippet/bookmark_form.html' with story=bookmarks.slug is_bookmarked='False' %}
+										{% endif %}
+									</span>	
+							    </p>
+							    <p class="text-muted">{{ bookmarks.date_posted }}</p>
+						     </div>
+						 </div>
+					  </div>
+					</div>
+					<div id="a{{ forloop.counter }}" style="display:none">{{ bookmarks.body|safe }}</div>
+					
+				{% endfor %}
+			{% endif %}	
+		</div>
+		
+	</div>
+<script>
+	for(var i=1; i<={{ bookmarks_list.count }}; i++){
+		var src = $("#a"+i+" figure img:eq(0)").attr('src');
+		$(".bookmark-img"+i).attr('src',src);
+		var a = $("#a"+i+" p");
+		var b = $(".bookmark-body"+i);
+		for(var j=0;j<a.length;j++){
+			b.append(a[j]);
+		}
+		b.text(b.text().substring(0,150));
+		b.append("...");
+	}
+</script>
+
+{% endblock content %}

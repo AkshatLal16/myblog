@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content_blog %}
+	<div class="genre-container topics">
+		<h2 class="d-inline"><b>Explore Topics</b></h2>
+		<hr class="mb-5">
+		<div class="topic-body">
+		{% for topic in genre_category %}
+			<h4 class="border-bottom border-dark pb-3"><strong>{{ topic.category }}</strong></h4>
+			<div class="p-4">
+				<div class="row">
+					{% for object in genre %}
+						{% if object.category == topic %}
+						<div class="col-lg-4">
+							<div class="border mb-4">
+								<div class="card-head px-3 py-4">
+									<a href="{% url 'genre' title=object.title %}" class="link">
+										<h5 class="d-inline"><strong>{{ object.title }}</strong></h5>
+									</a>
+								</div>
+								<a href="{% url 'genre' title=object.title %}">
+									<img style="height: 200px; object-fit: cover; width:100%" src="{{ object.image.url }}" class=" img-fluid" alt="">
+								</a>
+							</div>
+						</div>
+						{% endif %}
+				{% endfor %}
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock content_blog %}

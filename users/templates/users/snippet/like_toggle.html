@@ -1,0 +1,11 @@
+{% load static %}
+<applause-button style="height:40px; width:40px;" class="like-button" data-is-clapped="{{ is_clapped }}" data-story="{{ story }}" data-count="{{ count }}" color="magenta" id = "applause-btn"></applause-button>
+<span class="applause-count align-self-center ml-3 text-muted" id="apBtn">{{ count }}</span>
+
+{% if is_clapped == 'True' %}
+
+<script>
+	$(".like-button").attr('class','like-button clapped clap-limit-exceeded');
+</script>
+
+{% endif %}

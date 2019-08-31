@@ -1,0 +1,134 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content_blog %}
+	<div class="genre-container mt-4">
+		<div class="row">
+			<div class="col-lg-8">
+				{% if popular_story.all.count == 0 %}
+					<div style="padding: 50px 0" class="rounded mb-3 text-center">
+						<h2 class="align-self-center font-weight-bolder">No Stories Yet</h2>
+					</div>
+				{% else %}
+					<div class="card p-2 border-0 mb-2">
+					  <a href="{% url 'show-story' username=popular_story.0.author.username slug=popular_story.0.slug %}"><img class="card-img-top rounded-0 img-fluid popular-story-img" style="max-height: 300px; width:100%; object-fit: cover" src="" alt=""></a>
+					  <div class="card-body text-left px-0 py-2">
+					  	<a href="{% url 'show-story' username=popular_story.0.author.username slug=popular_story.0.slug %}" class="link">
+					  		<h2><b>{{ popular_story.0.title }}</b></h2>
+						    <div class="popular-story-body text-muted mb-1"></div>
+						</a>
+					    <div class="d-flex ">
+							<div class="mr-3">
+								<a href="{% url 'profile' username=popular_story.0.author.username %}" class="d-inline"><img src="{{ popular_story.0.author.profile.image.url }}" style="height: 45px; width: 45px; object-fit: cover" class="rounded-circle" alt=""></a>
+							</div>
+							<div class="">
+								<a href="{% url 'profile' username=popular_story.0.author.username %}" class="link"><p class="m-0" style="font-size: 15px">{{ popular_story.0.author.first_name }}</p></a>	
+								<p class="text-muted" style="font-size: 15px">{{ popular_story.0.date_posted|date:"d M" }}</p>							
+							</div>
+						</div>
+					  </div>
+					  <div id="ap" style="display:none">{{ popular_story.0.body|safe }}</div>
+					</div>
+
+
+					<p class="d-inline"><b>LATEST</b></p><hr>
+
+					<div class="featured-body">
+						{% for object in story %}
+							<div class="card border-0 mb-3">
+							  <div class="row no-gutters">
+							    <div class="col-9">
+							    	<div class="card-body px-3 py-0">
+							        <a href="{% url 'show-story' username=object.author.username slug=object.slug %}" class="link">
+							        	<h5 class="card-title mb-1" style="font-weight: bold">{{ object.title }}</h5>
+							        	<div class="story-body{{ forloop.counter }} text-muted mb-1"></div>
+							        </a>
+							        <p class="mb-0">	
+								    	<a href="{% url 'profile' username=object.author.username %}" class="link">{{ object.author.first_name }}</a>
+								    	 in 
+								    	<a href="#" class="link">{{ object.category }}</a>
+								    </p>
+								    <p class="text-muted">{{ object.date_posted|date:"d M" }}</p>
+							      </div>
+							    </div>
+							    <div class="col-3">
+							      <a href="#"><img class="card-img-top rounded-0 img-fluid story-img{{ forloop.counter }}" style="object-fit: cover; height: 150px; width: 150px" src="" alt=""></a>
+							    </div>
+							  </div>
+							  <div id="a{{ forloop.counter }}" style="display:none">{{ object.body|safe }}</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+
+
+
+
+			<div class="col-lg-4 desktop-view">
+				<div class="ml-2">
+					<h3><b>{{ genre_.title }}</b></h3>
+					<p class="text-muted">{{ genre_.info }}</p>
+					<div class="mt-5">
+						<p><strong>RELATED TOPICS</strong></p><hr>
+						{% for object in genre %}
+							<a href="{% url 'genre' title=object.title %}" class="link"><p class="m-1" style="font-size: 14px">{{ object.title|upper }}</p></a>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="ml-2">
+					<div class="mt-5">
+						<p><strong>POPULAR</strong></p><hr>
+						{% if popular_story.all.count == 0 %}
+							<div style="padding: 30px 0" class="rounded mb-3 text-center">
+								<h4 class="align-self-center font-weight-bolder">No Stories Yet</h4>
+							</div>
+						{% else %}
+							{% for story in popular_story %}
+								<div class="d-flex">
+									<div class="mr-2">
+										<a href="{% url 'show-story' username=story.author.username slug=story.slug %}" class="link"><p class="m-0"><b>{{ story.title }}</b></p></a>
+										<p class="text-muted" style="font-size: 14px">{{ story.date_posted|date:"d M" }}</p>
+									</div>
+									<div>
+										<a href="{% url 'show-story' username=story.author.username slug=story.slug %}"><img src="" style="height: 50px; width: 50px; object-fit: cover" class="img-fluid p-story-img{{ forloop.counter }}" alt=""></a>
+									</div>
+									<div id="pa{{ forloop.counter }}" style="display:none">{{ story.body|safe }}</div>
+								</div>
+							{% endfor %}
+						{% endif %}
+					</div>
+				</div>
+			</div>		
+		</div>
+	</div>
+<script>
+	var src = $("#ap figure img:eq(0)").attr('src');
+	$(".popular-story-img").attr('src',src);
+	var a = $("#ap p");
+	var b = $(".popular-story-body");
+	for(var j=0;j<a.length;j++){
+		b.append(a[j]);
+	}
+	b.text(b.text().substring(0,150));
+	b.append("...");
+</script>
+<script>
+	for(var i=1; i<={{ story.all.count }}; i++){
+		var src = $("#a"+i+" figure img:eq(0)").attr('src');
+		$(".story-img"+i).attr('src',src);
+		var a = $("#a"+i+" p");
+		var b = $(".story-body"+i);
+		for(var j=0;j<a.length;j++){
+			b.append(a[j]);
+		}
+		b.text(b.text().substring(0,150));
+		b.append("...");
+	}
+</script>
+<script>
+	for(var i=1; i<={{ popular_story.all.count }}; i++){
+		var src = $("#pa"+i+" figure img:eq(0)").attr('src');
+		$(".p-story-img"+i).attr('src',src);
+	}
+</script>
+{% endblock content_blog %}
