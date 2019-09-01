@@ -26,7 +26,7 @@ CREATE_ACCOUNT_TOKEN = "99479c3b1fbd4751fafd64d4ea47b172"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.48','localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -111,27 +111,19 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
-# DATABASES = {
-#                 'default': {
-#                 'ENGINE': 'django.db.backends.mysql',
-#                 'NAME': 'henryharvin',
-#                 'USER': 'root',
-#                 'PASSWORD': '',
-#                 'HOST': '',
-#                 'PORT': '',
-#                 'OPTIONS': {
-#                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-#                 }
-#             },
-#             'LMS': {
-#                 'NAME': 'lms',
-#                 'ENGINE': 'django.db.backends.mysql',
-#                 'USER': 'root',
-#                 'PASSWORD': '',
-#                 'HOST': '',
-#                 'PORT': '',
-#             }
-#         }
+DATABASES = {
+                'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'henryharvin',
+                'USER': 'root',
+                'PASSWORD': '',
+                'HOST': '',
+                'PORT': '',
+                'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+                }
+            }
+        }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
