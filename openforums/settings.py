@@ -240,4 +240,4 @@ JET_THEMES = [
     }
 ]
 
-CSRF_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True

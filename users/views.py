@@ -16,6 +16,7 @@ from openforums.settings import CREATE_ACCOUNT_TOKEN
 import requests
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+import os
 
 @api_view(['POST'])
 def create_account(request):
@@ -137,9 +138,6 @@ def bookmarks(request):
 	bookmarks_list = Profile.objects.get(user__username=request.user.username).bookmarks.all()
 	return render(request, 'users/bookmarks.html', {'bookmarks_list':bookmarks_list})
 
-@login_required
-def profile_edit(request):
-	return render(request, 'users/profile_edit.html', {})
 
 @login_required
 def profile_follow_toggle(request):
@@ -194,6 +192,7 @@ def response_claps_toggle(request):
 def profile_edit(request):
 	if request.method == 'POST':
 		form = EditProfileForm(request.POST, request.FILES, instance=get_object_or_404(Profile, user=request.user))
+		print(str(request.FILES['image']))
 		if form.is_valid():
 			profile = form.save(commit=False)
 			profile.save()
