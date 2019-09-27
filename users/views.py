@@ -30,20 +30,19 @@ def login(request):
 		username_ = request.POST.get('username')
 		password_ = request.POST.get('password')
 		user = auth.authenticate(username=username_, password=password_)
-		print(type(user))
 		if user is not None:
 			auth.login(request, user)
 			return redirect('blog-home')
-		else:
-			req=  requests.post("https://hhword.website/crm/action/checkmoodleuserapi.php", data={"username": username_, "password": password_})
-			response = req.json()
-			if response['status']==True:
-				password_ = make_password(password_)
-				user_ = User.objects.create(username=username_, password=password_)
-				auth.login(request, user_)
-				return redirect('blog-home')
-			else:
-				messages.success(request, f'Error wrong username/password')
+		#else:
+			#req=  requests.post("https://hhword.website/crm/action/checkmoodleusersapi.php", data={"username": username_, "password": password_})
+			#response = req.json()
+			#if response['status']==True:
+			#	password_ = make_password(password_)
+			#	user_ = User.objects.create(username=username_, password=password_)
+			#	auth.login(request, user_)
+			#	return redirect('blog-home')
+			#else:
+			#	messages.success(request, f'Error wrong username/password')
 	return render(request, 'users/login.html')
 
 def profile(request, username):
